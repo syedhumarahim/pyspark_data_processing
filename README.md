@@ -1,4 +1,4 @@
-[![Python 3.11.9](https://github.com/syedhumarahim/scaffold/actions/workflows/main.yml/badge.svg)](https://github.com/syedhumarahim/scaffold/actions/workflows/main.yml)
+[![CI](https://github.com/syedhumarahim/pyspark_data_processing/actions/workflows/main.yml/badge.svg)](https://github.com/syedhumarahim/pyspark_data_processing/actions/workflows/main.yml)
 ## Medical Data Analysis
 
 This project loads, processes, and analyzes medical patient data using PySpark. It provides operations for loading, describing, querying, and transforming the dataset, enabling insights into patient demographics, health indicators, and heart attack risk factors.
