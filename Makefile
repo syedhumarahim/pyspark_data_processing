@@ -1,16 +1,34 @@
 install:
-	pip install --upgrade pip && pip install -r requirements.txt
-
-run:
-	python3 main.py
-
-lint:
-	pylint --disable=R,C main.py
+	pip install --upgrade pip &&\
+		pip install -r requirements.txt
 
 test:
-	python3 test_main.py 
+	python -m pytest -vv -cov=mylib test_*.py
 
-cp C:/Users/ss1516/Downloads/Bob_PythonTemplate1-main/Bob_PythonTemplate1-main/.devcontainer .
+format:	
+	black *.py 
 
-all: install run test lint
+lint:
+	ruff check *.py mylib/*.py
 
+container-lint:
+	docker run --rm -i hadolint/hadolint < Dockerfile
+
+refactor: format lint
+
+deploy:
+	#deploy goes here
+		
+all: install lint test format deploy
+
+generate_and_push:
+	# Add, commit, and push the generated files to GitHub
+	@if [ -n "$$(git status --porcelain)" ]; then \
+		git config --local user.email "action@github.com"; \
+		git config --local user.name "GitHub Action"; \
+		git add .; \
+		git commit -m "Add output log"; \
+		git push; \
+	else \
+		echo "No changes to commit. Skipping commit and push."; \
+	fi

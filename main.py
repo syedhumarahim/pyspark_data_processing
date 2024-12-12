@@ -1,26 +1,46 @@
-import pandas as pd
+from mylib.lib import (
+    extract,
+    load_data,
+    describe,
+    query,
+    example_transform,
+    start_spark,
+    end_spark,
+)
 
-df = pd.read_csv("data/italian_gp_2024_fastestlaps.csv")
 
-def get_driver_with_highest_avg_speed(car_name):
+def main():
+    # Extract the data
+    extract()  # This downloads the medical dataset CSV
 
-    car_df = df[df['Car'].str.lower()  == car_name.lower()]
-    if car_df.empty:
-        print(f"No fastest lap data available for {car_name}.")
-        return None, None, None
-    else:
-        highest_avg_speed_row = car_df.loc[car_df['avg_speed'].idxmax()]
-        driver_name = highest_avg_speed_row['Driver']
-        lap_number = highest_avg_speed_row['Lap']
-        top_speed =  highest_avg_speed_row['avg_speed']
-        return driver_name, lap_number, top_speed
+    # Start Spark
+    spark = start_spark("HeartData")
+
+    # Load the data
+    df = load_data(spark, data="data/heart_attack_prediction_dataset.csv", name="HeartData")
+
+    # Describe the data
+    describe(df)
+
+    # Run a sample query: for example, average Cholesterol by Country
+    query(
+        spark,
+        df,
+        """
+        SELECT Country, AVG(Cholesterol) as avg_cholesterol
+        FROM HeartData
+        GROUP BY Country
+        ORDER BY avg_cholesterol DESC
+        """,
+        "HeartData",
+    )
+
+    # Transformation: Add a "RiskCategory" column
+    example_transform(df)
+
+    # End Spark Session
+    end_spark(spark)
 
 
 if __name__ == "__main__":
-    # team_name = input("""Enter the team name out of the list['McLaren Mercedes', 'Mercedes', 'Red Bull Racing Honda RBPT',
-    #    'Aston Martin Aramco Mercedes', 'Ferrari', 'Haas Ferrari',
-    #    'Kick Sauber Ferrari', 'Williams Mercedes', 'Alpine Renault',
-    #    'RB Honda RBPT']:""")
-    team_name = "Mercedes"
-    driver, lap, speed = get_driver_with_highest_avg_speed(team_name)
-    print(f"The fastest lap for {team_name} was set by {driver} on lap {lap} with speed of {speed}.")
+    main()
