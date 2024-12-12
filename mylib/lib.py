@@ -23,9 +23,13 @@ def end_spark(spark):
     spark.stop()
     return "stopped spark session"
 
-def extract(url='https://raw.githubusercontent.com/syedhumarahim/syedhumarahim-dataset_medical_records/main/heart_attack_prediction_dataset.csv', 
-            file_path="data/heart_attack_prediction_dataset.csv", 
-            directory="data"):
+def extract(
+    url='https://raw.githubusercontent.com/'
+        'syedhumarahim/syedhumarahim-dataset_medical_records/main/'
+        'heart_attack_prediction_dataset.csv',
+    file_path="data/heart_attack_prediction_dataset.csv",
+    directory="data"
+):
     if not os.path.exists(directory):
         os.makedirs(directory)
     if url:
