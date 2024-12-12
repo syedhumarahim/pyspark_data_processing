@@ -66,12 +66,13 @@ After loading, summary statistics are generated to provide a quick overview of n
 
 You can run Spark SQL queries on the DataFrame. For example, to find the countries with the highest average Cholesterol levels:
 
-```sql
+```
 SELECT Country, AVG(Cholesterol) AS avg_cholesterol
 FROM HeartData
 GROUP BY Country
 ORDER BY avg_cholesterol DESC
 LIMIT 3;
+```
 
 | Country | avg_cholesterol |
 |---------|-----------------|
