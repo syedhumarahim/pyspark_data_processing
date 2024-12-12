@@ -34,11 +34,12 @@ def test_load_data(spark):
 
 
 def test_example_transform(spark):
-    """Test that example_transform adds the 'RiskCategory' column based on Heart Attack Risk."""
+    """Test that example_transform adds the 'RiskCategory' 
+    column based on Heart Attack Risk."""
     df = load_data(spark)
     transformed_df = example_transform(df)  
     assert "RiskCategory" in transformed_df.columns, \
         "Expected 'RiskCategory' column after transformation."
-    #check that values in 'RiskCategory' are as expected (e.g., 'High Risk' or 'Low Risk').
+    #check values in 'RiskCategory' 
     sample = transformed_df.select("RiskCategory").head(1)
     assert len(sample) > 0, "Should have at least one row after transformation."

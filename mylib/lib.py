@@ -66,7 +66,9 @@ def example_transform(df):
     If Heart Attack Risk == 1 => 'High Risk'
     Else => 'Low Risk'
     """
-    df = df.withColumn("RiskCategory", when(col("Heart Attack Risk") == 1, "High Risk").otherwise("Low Risk"))
+    df = df.withColumn("RiskCategory", 
+                       when(col("Heart Attack Risk") == 1, 
+                            "High Risk").otherwise("Low Risk"))
     log_output("transform data", df.limit(10).toPandas().to_markdown())
     return df.show()
 

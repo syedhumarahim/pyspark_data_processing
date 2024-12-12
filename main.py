@@ -17,7 +17,8 @@ def main():
     spark = start_spark("HeartData")
 
     # Load the data
-    df = load_data(spark, data="data/heart_attack_prediction_dataset.csv", name="HeartData")
+    df = load_data(spark, data="data/heart_attack_prediction_dataset.csv", 
+                   name="HeartData")
 
     # Describe the data
     describe(df)
